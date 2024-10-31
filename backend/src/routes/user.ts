@@ -19,7 +19,7 @@ const UserRoutes = new Hono<{
 }>()
 
 // middleware -----
-UserRoutes.use("/*", async (c, next) => {
+UserRoutes.use("/get", async (c, next) => {
     try{
       const header = c.req.header("authorization") || "";
       const token = header.split(' ')[1];
@@ -127,14 +127,14 @@ UserRoutes.post("/signin",
         }
       }, async (c) => {
 
-const prisma = c.get('prisma')
+  const prisma = c.get('prisma')
 
-const body = await c.req.json()
+  const body = await c.req.json()
 
-const user = await prisma.user.findUnique({
-    where: {
-    email: body.email,
-    }
+  const user = await prisma.user.findUnique({
+      where: {
+      email: body.email,
+      }
 })
 
 if (!user) {
@@ -162,7 +162,7 @@ else{
 
 })
   
-UserRoutes.get('/', async (c) => {
+UserRoutes.get('/get', async (c) => {
 const prisma = c.get('prisma')
 
 const currentUser = c.get('user')
