@@ -94,13 +94,19 @@ BlogRoutes.post("/",
 
         const currentUser = c.get('user')
 
+        
         try{
+            let date = new Date()
             let post = await prisma.post.create({
+                select : {
+                    id: true
+                },
             data:{
                 title: body.title,
                 content: body.content,
                 published: body.published,
-                authorId: currentUser
+                authorId: currentUser,
+                publishDate: date.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'})
             }
             })
 
@@ -117,11 +123,8 @@ BlogRoutes.post("/",
             }
             })
 
-            console.log(user)
-            console.log(post)
-        
             return c.json<{ detail: string }>({
-            detail:'Post created.'
+            detail: post.id
             })
         }
         catch{
@@ -188,13 +191,23 @@ BlogRoutes.get("/bulk", async (c) => {
 
     try{
         const blogs = await prisma.post.findMany({
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                publishDate: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            },
             where:{
                 published: true
             }
         })
-        console.log(blogs)
         return c.json({
-            'data':blogs
+            'data':blogs.reverse()
         })
     }catch (e) {
         console.log(e)
@@ -211,6 +224,17 @@ BlogRoutes.get("/:id", async (c) => {
 
     try{
         const blogs = await prisma.post.findFirst({
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                publishDate: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            },
             where:{
                 id: body.id
             }

@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { sign, verify } from 'hono/jwt'
 import CryptoJS from 'crypto-js';
 import { withAccelerate } from '@prisma/extension-accelerate';
-import { userSchema } from '@pahul100/medium-common';
+import { UserSchema, userSchema } from '@pahul100/medium-common';
 
 
 
@@ -14,7 +14,8 @@ const UserRoutes = new Hono<{
     },
     Variables:{
       prisma: PrismaClient,
-      user: string
+      user: string,
+      userDetails: UserSchema
     }
 }>()
 
@@ -71,6 +72,11 @@ UserRoutes.post("/signup",
       {
         const body = await c.req.json()
         let parsed = userSchema.safeParse(body)
+
+        console.log(parsed)
+
+        // @ts-ignore
+        c.set("userDetails", parsed.data)
   
         if(parsed.success){
           await next()
@@ -86,14 +92,15 @@ UserRoutes.post("/signup",
   
     const prisma = c.get("prisma")
   
-    const body = await c.req.json()
+    const body = c.get('userDetails')
   
     const password = CryptoJS.SHA256(body.password).toString()
     try{
       const user = await prisma.user.create({
         data: {
           email: body.email,
-          password: password, 
+          password: password,
+          name: body.name
         }
         })
       let expire = Date.now() + 1000 * 60 * 60 * 24 * 7
@@ -174,9 +181,10 @@ try{
         id: currentUser
     }
     })
-
+    
     if(user){
-    return c.json(user)
+      user.password = "HIDDEN"
+      return c.json(user)
     }
     else{
     c.status(404)
@@ -195,5 +203,6 @@ catch{
 
 })
 
+UserRoutes.get('/get/:id')
 
 export default UserRoutes

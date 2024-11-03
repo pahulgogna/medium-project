@@ -15,6 +15,10 @@ function Auth({type}: {type: "signup" | "signin"}) {
 
     async function sendRequest(): Promise<void>{
         if(postInputs.email && postInputs.password){
+            if(type === "signup" && !postInputs.name){
+                alert("Please fill all the fields")
+                return
+            }
             try{
                 const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${type === "signup" ? "signup":"signin"}`, postInputs).catch(() => {
                     alert(`Something went wrong while signing ${type === "signup" ? "up": "in"}`)
@@ -80,7 +84,7 @@ function Auth({type}: {type: "signup" | "signin"}) {
 }
 
 
-interface InputFieldInterface {
+export interface InputFieldInterface {
     lable: string,
     placeholder: string,
     value: string,
@@ -88,7 +92,7 @@ interface InputFieldInterface {
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const InputField = ({lable, placeholder, onChange, value, password = false} : InputFieldInterface) => {
+export const InputField = ({lable, placeholder, onChange, value, password = false} : InputFieldInterface) => {
     return(
         <div className='mt-3'>
             <label htmlFor={lable} className="block mb-2 text-md font-bold text-gray-700">{lable}</label>
