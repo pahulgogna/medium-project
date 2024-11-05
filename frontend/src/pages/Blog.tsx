@@ -18,7 +18,7 @@ function Blog() {
   }
   else if(BlogData.state == "hasValue"){
     return (
-        <div className="grid grid-cols-12 f-full">
+        <div className="grid grid-cols-12">
           <div className="col-start-1 col-end-9">
             {BlogData.contents &&
               <FullBlog title={BlogData.contents?.title}  content={BlogData.contents?.content} publishDate={BlogData.contents.publishDate}/>
