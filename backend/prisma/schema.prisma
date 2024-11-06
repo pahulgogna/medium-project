@@ -30,4 +30,5 @@ model Post{
   author User @relation(fields: [authorId], references: [id])
   authorId String
   publishDate String
+  clicks Int @default(0)
 }

@@ -3,13 +3,7 @@ import BlogCard from "../components/BlogCard"
 import { blogAtom } from "../store/atom/atoms"
 import { BlogSkeleton } from "../components/LoadingSkeletons"
 
-export function Loading() {
-  return (
-      <div className="font-bold text-2xl">
-        Loading...
-      </div>
-  )
-}
+
 
 function Blogs() {
 

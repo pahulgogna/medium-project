@@ -191,6 +191,11 @@ BlogRoutes.get("/bulk", async (c) => {
 
     try{
         const blogs = await prisma.post.findMany({
+            orderBy: [
+                {
+                    clicks: 'asc'
+                }
+            ],
             select: {
                 content: true,
                 title: true,
@@ -223,7 +228,7 @@ BlogRoutes.get("/:id", async (c) => {
     const body = c.req.param()
 
     try{
-        const blogs = await prisma.post.findFirst({
+        const blog = await prisma.post.findFirst({
             select: {
                 content: true,
                 title: true,
@@ -233,16 +238,29 @@ BlogRoutes.get("/:id", async (c) => {
                     select: {
                         name: true
                     }
-                }
+                },
+                clicks: true
             },
             where:{
                 id: body.id
             }
         })
 
+        if(blog){
+            await prisma.post.update({
+                where:{
+                    id: body.id
+                },
+                data:{
+                    clicks: blog.clicks + 1 
+                }
+            })
+        }
+
         return c.json({
-            'data': blogs
+            'data': blog
         })
+
     }catch(e) {
         console.log(e)
         c.status(404)
@@ -251,8 +269,6 @@ BlogRoutes.get("/:id", async (c) => {
         })
     }
 })
-
-
 
 
 
