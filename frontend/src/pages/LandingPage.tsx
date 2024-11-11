@@ -5,7 +5,6 @@ import { NavigateFunction, useNavigate } from 'react-router-dom'
 async function CheckToken(token: string, navigate : NavigateFunction) {
     try{
         let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get`, {headers: {Authorization: `Bearer ${token}`}})
-        console.log(res.data)
         if(res.data.detail){
             navigate('/signin')
         }

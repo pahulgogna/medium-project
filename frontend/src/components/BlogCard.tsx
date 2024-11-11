@@ -7,7 +7,8 @@ export interface BlogCardInterface {
     author: {"name": string},
     title: string,
     content: string,
-    publishDate: string
+    publishDate: string,
+    clicks?: number
 }
 
 function BlogCard({
@@ -35,7 +36,7 @@ function BlogCard({
                     {title}
                 </div>
                 <div className='text-slate-600 font-medium text-base'>
-                    {content.split('\n').length > 7? RenderMarkDown(content.split('\n').slice(0, 7).join('\n') + "..."):RenderMarkDown(content)}
+                    {content.split('\n').length > 2? RenderMarkDown(content.split('\n').slice(0, 2).join('\n') + "..."):RenderMarkDown(content)}
                 </div>
                 <div className='text-slate-500 font-light text-sm mt-4 mx-1'>
                     {content.split(' ').length > 238 ? `${Math.ceil(content.split(' ').length/238)} minutes` : '< 1 minute '} read

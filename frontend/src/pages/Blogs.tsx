@@ -9,7 +9,6 @@ function Blogs() {
 
   const BlogsData = useRecoilValueLoadable(blogAtom)
   
-
   if(BlogsData.state === "loading"){
     return (
       <>
@@ -25,8 +24,20 @@ function Blogs() {
       <>
         <div className="flex justify-center">
               <div className="w-11/12">
-                {BlogsData.contents.map((blog, index) => {
-                  return <BlogCard id={blog.id} author={{"name": blog.author?.name ? blog.author.name: '...'}} title={blog.title} publishDate={blog.publishDate ? blog.publishDate: "31 Oct, 2024"} content={blog.content} key={index}/>
+                {[...BlogsData.contents].sort((a, b) => {
+                  if(a.clicks && b.clicks){
+                    return  b.clicks / getDateDiff(b.publishDate) - a.clicks / getDateDiff(a.publishDate)
+                  }
+                  else{
+                    return getDateDiff(a.publishDate) - getDateDiff(b.publishDate)
+                  }
+                }).map((blog, index) => {
+                  return(
+                    <div>
+                      <BlogCard id={blog.id} author={{"name": blog.author?.name ? blog.author.name: '...'}} title={blog.title} publishDate={blog.publishDate ? blog.publishDate: "31 Oct, 2024"} content={blog.content} key={index}/>
+                    </div>
+                  )
+                  
                 })}
               </div>
         </div>
@@ -34,5 +45,14 @@ function Blogs() {
     )
   }
 }
+
+
+function getDateDiff(date: string){
+  let InDate = new Date(date)
+  let now  = new Date()
+  let diff = Math.ceil((now.getTime() - InDate.getTime()) / 87400000)
+  return diff
+}
+
 
 export default Blogs
