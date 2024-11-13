@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil"
 import { blogContentAtom } from "../store/atom/atoms"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import Loader from "./Loader"
 
 function CreateBlogInput() {
 
@@ -15,7 +16,10 @@ function CreateBlogInput() {
         "published": true
     })
 
+    const [loading, setLoading] = useState(false)
+
     async function sendRequest() {
+        setLoading(true)
         if(blogInput.content && blogInput.title){
             try{
                 let response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog`, blogInput, 
@@ -23,18 +27,22 @@ function CreateBlogInput() {
                 })
                 let data = response.data
                 if(data.detail){
+                    setLoading(false)
                     navigate(`/blog/${data.detail}`)
                     return
                 }
+                setLoading(false)
                 alert("Some error occurred")
                 return
             }
             catch{
+                setLoading(false)
                 alert("Some error occurred")
             }
 
         }
         else{
+            setLoading(false)
             alert("Please fill in all the fields")
         }
     }
@@ -42,11 +50,12 @@ function CreateBlogInput() {
 
     return (
         <div className='bg-slate-100 border-r flex justify-center h-full overscroll-none'>
+
+            {loading && <Loader/>}
             <div className='flex flex-col w-full p-20'>
                     <InputField lable="Title" placeholder="Blog Title" onChange={(e) => {
                         setBlogInput(c => ({...c, "title":e.target.value}))
                     }} value={blogInput.title}/>
-
                     <ContentInput setFunction={setBlogInput} placeholder="*This is your* **Markdown Preview**" lable='Content'/>
 
                     <button type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full mt-5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" onClick={sendRequest}>Publish</button>

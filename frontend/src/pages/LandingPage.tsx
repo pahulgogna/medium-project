@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
+import { Spinner } from '../components/Loader'
 
 async function CheckToken(token: string, navigate : NavigateFunction) {
     try{
@@ -19,6 +20,7 @@ async function CheckToken(token: string, navigate : NavigateFunction) {
 }
 
 function LandingPage() {
+
     const navigate = useNavigate()
     let token = localStorage.getItem('token')
 
@@ -32,7 +34,8 @@ function LandingPage() {
     }, [])
 
     return (
-        <div>
+        <div className='items-center flex justify-center h-screen'>
+            <Spinner/>
         </div>
     )
 }

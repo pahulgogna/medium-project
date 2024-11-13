@@ -6,23 +6,16 @@ import Blog from './pages/Blog'
 import Blogs from './pages/Blogs'
 import { RecoilRoot } from 'recoil'
 import CreateBlog from './pages/CreateBlog'
-import { useEffect, useState } from 'react'
 import AppBar from './components/AppBar'
 import LandingPage from './pages/LandingPage'
 
 function App() {
-  const [token, setToken] = useState('')
-
-  useEffect(() => {
-    let t = localStorage.getItem('token')
-    t && setToken(t)
-  }, [location.pathname])
 
   return (
     <>
       <BrowserRouter>
         <RecoilRoot>
-          {token && <AppBar/>}
+          <AppBar/>
           <Routes>
             <Route path='/' element = <LandingPage/> />
             <Route path='/signup' element = <Signup />/>

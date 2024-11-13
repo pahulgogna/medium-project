@@ -61,7 +61,7 @@ function AppBar() {
                     <Link to={"/"} className='flex justify-center flex-col pl-5 font-semibold text-xl cursor-pointer'>
                             Medium
                     </Link>
-                    {userData.id && 
+                    {userData && userData.id &&
                         <div className='flex justify-right pr-5'>
                             <div className='flex justify-center flex-col p-4'>
                                 <Link to={"/blogs/create"} className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-1.5 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Create</Link>

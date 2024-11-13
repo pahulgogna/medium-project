@@ -2,10 +2,13 @@ import { UserSchema } from '@pahul100/medium-common'
 import { ChangeEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Loader from './Loader'
 
 function Auth({type}: {type: "signup" | "signin"}) {
 
     const navigate = useNavigate()
+
+    const [loading, setLoading] = useState(false)
 
     const [postInputs, setPostInputs] = useState<UserSchema>({
         email: '',
@@ -19,28 +22,36 @@ function Auth({type}: {type: "signup" | "signin"}) {
                 alert("Please fill all the fields")
                 return
             }
+
+            setLoading(true)
+
             try{
                 const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/${type === "signup" ? "signup":"signin"}`, postInputs).catch(() => {
+                    setLoading(false)
                     alert(`Something went wrong while signing ${type === "signup" ? "up": "in"}`)
                 })
                 if(response){
                     const token = response.data
                     localStorage.setItem('token', token.token)
+                    setLoading(false)
                     navigate('/blogs')
                 }
                 return
             }
             catch(e) {
+                setLoading(false)
                 return
             }
         }
         else{
+            setLoading(false)
             alert("Please fill all the fields")
         }
     }
 
   return (
     <div className='h-screen flex justify-center flex-col'>
+        {loading && <Loader/>}
         <div className='flex justify-center'>
             <div className='w-1/2'>
                 <div className='text-3xl font-extrabold'>
