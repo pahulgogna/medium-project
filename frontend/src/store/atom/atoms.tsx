@@ -33,12 +33,37 @@ export const blogAtom = atom({
     default: selector({
         key:'BlogSelector',
         get: async () => {
-            let userData = localStorage.getItem('token')
-            let response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/bulk`,
-                    {headers: {Authorization: `Bearer ${userData}`}
-                })
-            let data: BlogsResponseInterface = response.data
-            return data.data
+            try{
+                let userData = localStorage.getItem('token')
+                let response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/bulk`,
+                        {headers: {Authorization: `Bearer ${userData}`}
+                    })
+                let data: BlogsResponseInterface = response.data
+                return data.data
+            }
+            catch {
+                return []
+            }
+        }
+    })
+})
+
+export const MyBlogsAtom = atom({
+    key: 'myBlogs',
+    default: selector({
+        key:'myBlogsSelector',
+        get: async () => {
+            try{
+                let userData = localStorage.getItem('token')
+                let response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/blog/my`,
+                        {headers: {Authorization: `Bearer ${userData}`}
+                    })
+                let data: BlogsResponseInterface = response.data
+                return data.data
+            }
+            catch{
+                return []
+            }
         }
     })
 })
@@ -69,3 +94,4 @@ export const blogContentAtom = atom({
     key:"blogContentAtom",
     default: ""
 })
+

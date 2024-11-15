@@ -2,12 +2,13 @@ import { Suspense, useState } from 'react'
 import { Avatar } from './BlogCard'
 import { useRecoilValueLoadable } from 'recoil'
 import { userAtom } from '../store/atom/atoms'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 function UserSettings({name, email} : {name: string, email: string}) {
+    const navigate = useNavigate()
     return (
-        <div className='bg-slate-300/95 border w-[150px] h-[140px] absolute right-8 mt-14 z-10 rounded flex flex-col border-black'>
+        <div className='bg-slate-300/95 border w-[150px] h-[200px] absolute right-8 mt-14 z-10 rounded flex flex-col border-black'>
             <div className='border-b border-black h-10 flex flex-col justify-center'>
                 <div className='flex justify-center'>
                     {name.length < 13 ? name : name.substring(0, 13) + '...'}
@@ -18,8 +19,15 @@ function UserSettings({name, email} : {name: string, email: string}) {
                     {email.length < 13 ? email : email.substring(0, 13) + '...'}
                 </div>
             </div>
-            <div className='h-10 flex flex-col justify-center'>
-                <div className='mt-5 flex justify-center'>
+            <div className='h-15 flex flex-col justify-center'>
+
+                <div className='border-b py-3 border-black flex justify-center'>
+                    <button className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm py-1.5 w-1/2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" onClick={() => {
+                        navigate('/blogs/my')
+                    }}>My Blogs</button>
+                </div>
+
+                <div className='pt-4 flex justify-center'>
                     <button className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm py-1.5 w-1/2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" onClick={() => {
                         localStorage.clear()
                         window.location.href = '/'

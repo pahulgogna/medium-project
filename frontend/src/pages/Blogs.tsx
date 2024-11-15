@@ -33,12 +33,10 @@ function Blogs() {
                   }
                 }).map((blog, index) => {
                   return(
-                    <div>
-                      <BlogCard id={blog.id} author={{"name": blog.author?.name ? blog.author.name: '...'}} title={blog.title} publishDate={blog.publishDate ? blog.publishDate: "31 Oct, 2024"} content={blog.content} key={index}/>
-                    </div>
+                      <BlogCard id={blog.id} author={{"name": blog.author?.name ? blog.author.name: '...', email: blog.author.email}} title={blog.title} publishDate={blog.publishDate ? blog.publishDate: ""} content={blog.content} key={index}/>
                   )
-                  
-                })}
+                }
+              )}
               </div>
         </div>
       </>

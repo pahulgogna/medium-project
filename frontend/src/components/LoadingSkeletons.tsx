@@ -83,3 +83,63 @@ export function Loading() {
       </div>
     )
   }
+
+
+export function LoadingBlogEditPage() {
+    return (
+        <div className="p-10">
+            <div className="flex justify-end w-full">
+                <div className="flex justify-center flex-col">
+                    <div className=" rounded-lg bg-gray-300 text-sm h-7 px-7 mb-5 w-full">
+                    </div>
+                <div className="bg-gray-300 h-5 rounded-full mt-1 w-10"></div>
+                </div>
+            </div>
+            <div className="h-7 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="p-5">    
+                <div className="h-1 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-3.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-3.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-3.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+            </div>
+            <div className="p-5">    
+                <div className="h-1 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-3.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-3.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-3.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-2.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+                <div className="h-1.5 bg-gray-300 rounded-full mt-5 max-w-full"></div>
+            </div>
+        </div>
+        </div>
+    )
+}

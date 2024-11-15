@@ -48,7 +48,7 @@ BlogRoutes.use("/*", async (c, next) => {
       c.status(403)
       return c.json({"detail": "Unauthorized"})
     }
-  })
+})
 
 // initializing db middleware
 BlogRoutes.use("/*", async (c, next) => {
@@ -171,11 +171,20 @@ BlogRoutes.put("/",
                 }
             })
 
-            c.status(201)
-            return c.json<{ detail: string, id: string }>({
-                detail:'Blog published.',
-                id: post.id
-            })
+            if(post.id){
+                c.status(201)
+                return c.json<{ detail: string, id: string }>({
+                    detail:'Blog published.',
+                    id: post.id
+                })
+            }
+            else{
+                c.json(403)
+                return c.json({
+                    detail: 'Unauthorized',
+                    id: null
+                })
+            }
         }
         catch{
             c.status(500)
@@ -204,7 +213,8 @@ BlogRoutes.get("/bulk", async (c) => {
                 clicks: true,
                 author: {
                     select: {
-                        name: true
+                        name: true,
+                        email: true
                     }
                 }
             },
@@ -224,6 +234,44 @@ BlogRoutes.get("/bulk", async (c) => {
 
 })
 
+
+
+BlogRoutes.get("/my", async (c) => {
+
+    const prisma = c.get('prisma')
+    try{
+        const blogs = await prisma.post.findMany({
+            select: {
+                content: true,
+                title: true,
+                id: true,
+                publishDate: true,
+                clicks: true,
+                author: {
+                    select: {
+                        name: true,
+                        email: true
+                    }
+                }
+            },
+            where:{
+                authorId: c.get('user')
+            }
+        })
+        return c.json({
+            'data':blogs.reverse()
+        })
+    }catch (e) {
+        console.log(e)
+        return c.json({
+            'detail': 'some error occurred'
+        })
+    }
+
+})
+
+
+
 BlogRoutes.get("/:id", async (c) => {
     const prisma = c.get('prisma')
     const body = c.req.param()
@@ -233,11 +281,13 @@ BlogRoutes.get("/:id", async (c) => {
             select: {
                 content: true,
                 title: true,
+                published: true,
                 id: true,
                 publishDate: true,
                 author: {
                     select: {
-                        name: true
+                        name: true,
+                        email: true
                     }
                 },
                 clicks: true

@@ -6,7 +6,7 @@ function FullBlog({
     publishDate
 }: {title: string, content: string, publishDate:string}) {
   return (
-    <div className='w-full h-full pl-10 pt-10 pb-10'>
+    <div className='w-full h-full pr-10 pl-10 pt-10 pb-10'>
         <h1 className="pr-10">
             {title}
         </h1>

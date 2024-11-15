@@ -28,7 +28,7 @@ function CreateBlogInput() {
                 let data = response.data
                 if(data.detail){
                     setLoading(false)
-                    navigate(`/blog/${data.detail}`)
+                    navigate(`/blogs/${data.detail}`)
                     return
                 }
                 setLoading(false)
