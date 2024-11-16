@@ -2,6 +2,7 @@ import { useRecoilValueLoadable } from "recoil"
 import BlogCard from "../components/BlogCard"
 import { MyBlogsAtom } from "../store/atom/atoms"
 import { BlogSkeleton } from "../components/LoadingSkeletons"
+import { Link } from "react-router-dom"
 
 
 
@@ -28,8 +29,11 @@ function MyBlogs() {
     return (
       <>
         <div className="flex justify-center">
-        {BlogsData.contents.length 
+        {BlogsData.contents.length
         ? <div className="w-11/12">
+          <h4 className="flex justify-end text-slate-500 font-semibold subpixel-antialiased">
+            {BlogsData.contents.length} Blogs Found.
+          </h4>
             {BlogsData.contents.map((blog, index) => {
                 return(
                 <div>
@@ -39,8 +43,10 @@ function MyBlogs() {
             })}
           </div>: 
           <div className="m-5 w-full">
-            <h2>0 Blogs found.</h2>
-            <h4>Create your first blog here!</h4>
+            <h3>0 Blogs found.</h3>
+            <h4>
+              Create your first blog <Link className="text-blue-500" to={"/blogs/create"}>here!</Link>
+            </h4>
           </div>
             }
         </div>

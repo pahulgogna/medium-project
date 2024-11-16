@@ -3,12 +3,26 @@ import { ChangeEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Loader from './Loader'
+import { useSetRecoilState } from 'recoil'
+import { userAtom } from '../store/atom/atoms'
+
+
+async function getUser(token: string) {
+    let response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get`,
+            {headers: {Authorization: `Bearer ${token}`}
+        })
+    let data = response.data
+    return data
+}
+
 
 function Auth({type}: {type: "signup" | "signin"}) {
 
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
+
+    const setUserAtomData = useSetRecoilState(userAtom)
 
     const [postInputs, setPostInputs] = useState<UserSchema>({
         email: '',
@@ -33,6 +47,8 @@ function Auth({type}: {type: "signup" | "signin"}) {
                 if(response){
                     const token = response.data
                     localStorage.setItem('token', token.token)
+                    let user = await getUser(token.token)
+                    setUserAtomData(user)
                     setLoading(false)
                     navigate('/blogs')
                 }

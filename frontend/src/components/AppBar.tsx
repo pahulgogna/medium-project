@@ -79,7 +79,7 @@ function AppBar() {
                                 <div className='cursor-pointer' onClick={() => {
                                     setUserWindow(c => !c)
                                 }}>
-                                    <Avatar name={userData.name ? userData.name : userData.email} size='9'/>
+                                    <Avatar name={userData.name ?? userData.email} size='9'/>
                                 </div>
                                 </Suspense>
                             </div>
