@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useRecoilValueLoadable } from "recoil"
 import { blogAtomFamily, userAtom } from "../store/atom/atoms"
-import { BlogSkeleton, Loading, LoadingBlogEditPage } from "../components/LoadingSkeletons"
+import { LoadingBlogEditPage } from "../components/LoadingSkeletons"
 import Loader from "../components/Loader"
 import EditFullBlog from "../components/EditFullBlog"
 
