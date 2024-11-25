@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { RenderMarkDown } from "./CreateBlogPreview"
 import { useRecoilValueLoadable } from "recoil"
 import { userAtom } from "../store/atom/atoms"
+import { useMemo } from "react"
 
 
 export interface BlogCardInterface {
@@ -36,6 +37,14 @@ function BlogCard({
 
         const user = useRecoilValueLoadable(userAtom)
 
+        const minuteRead = useMemo(() => {
+            return content.split(' ').length > 238 ? `${Math.ceil(content.split(' ').length/238)} minutes read` : '< 1 minute read'
+        }, [content])
+
+        const contentPreview = useMemo(() => {
+            return content.split('\n').length > 2? RenderMarkDown(content.split('\n').slice(0, 2).join('\n') + "..."):RenderMarkDown(content)
+        }, [content])
+
     return (
         <div>
             <div className='p-5 border-b border-slate-200'>
@@ -67,10 +76,10 @@ function BlogCard({
                             {title}
                         </div>
                         <div className='text-slate-600 font-medium text-base'>
-                            {content.split('\n').length > 2? RenderMarkDown(content.split('\n').slice(0, 2).join('\n') + "..."):RenderMarkDown(content)}
+                            {contentPreview}
                         </div>
                         <div className='text-slate-500 font-light text-sm mt-4 mx-1'>
-                            {content.split(' ').length > 238 ? `${Math.ceil(content.split(' ').length/238)} minutes` : '< 1 minute '} read
+                            {minuteRead}
                         </div>
                 </Link>
             </div>
